@@ -21,7 +21,7 @@ app.get('/',function(req,res){
     res.send("welcome you big shit!");
 });
 
-mongoose.connect(process.env.DB_CONNECTION_TWO,{useNewUrlParser:true,useUnifiedTopology:true},()=>{
+mongoose.connect(process.env.DB_CONNECTION_THREE,{useNewUrlParser:true,useUnifiedTopology:true},()=>{
     console.log('connected successfully!');
     
 });

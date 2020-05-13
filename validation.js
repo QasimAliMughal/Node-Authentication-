@@ -15,4 +15,18 @@ const registerValidation = (data) =>{
     return userJoiSchema.validateAsync(data);
 }
 
+const loginValidation = (data) =>{
+
+        const userJoiSchema = Joi.object({
+            email: 
+                    Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+            password:
+                    Joi.string().min(8).max(16).required()
+        });
+    
+        return userJoiSchema.validateAsync(data);
+    }
+
+
 module.exports.registerValidation = registerValidation;
+module.exports.loginValidation = loginValidation;

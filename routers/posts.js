@@ -10,8 +10,8 @@ const posts = [
 
 router.get('/posts',verify,(req,res)=>{
 
-    res.json(posts);
-
+    // res.json(posts);
+    res.send(req.user);
 
 });
 

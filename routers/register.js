@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {registerValidation} = require('../validation');
+const {registerValidation,loginValidation} = require('../validation');
 
 
 router.post('/register', async (req,res)=>{
@@ -53,18 +53,18 @@ router.post('/register', async (req,res)=>{
 
 router.post('/login',async (req,res)=>{
 
-    const {error} = await registerValidation(req.body);
+    const {error} = await loginValidation(req.body);
     if(error) return res.send(error.details[0].message)
 
     const user = await User.findOne({email:req.body.email})
     if(!user) return res.send("Invalid Email")
 
-    const validPassword = await bcrypt.compare(user.password,req.body.password)
+    const validPassword = await bcrypt.compare(req.body.password,user.password)
     if(!validPassword) return res.send("Invalid Password")
+   
 
-
-    const token = jwt.sign({_id:user._id},process.env.SECRET_TOKEN);
-    res.status(200).header('auth-token',token).send(token);
+    const token = await jwt.sign({_id:user._id},process.env.SECRET_TOKEN);
+    res.header('auth-token',token).send(token);
 
 
     res.send('logged in successfully!')
