@@ -3,7 +3,7 @@ const app = express();
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const posts = require('./routers/posts');
 
 dotenv.config();
 const registerRouter = require('./routers/register');
@@ -13,6 +13,9 @@ const registerRouter = require('./routers/register');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/',registerRouter);
+app.use('/',posts);
+
+
 
 app.get('/',function(req,res){
     res.send("welcome you big shit!");
